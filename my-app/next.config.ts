@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
-  distDir: "dist",
+  // Remove static export for Vercel (supports serverless functions)
+  // output: "export",
+  // distDir: "dist",
   images: {
     unoptimized: true,
   },

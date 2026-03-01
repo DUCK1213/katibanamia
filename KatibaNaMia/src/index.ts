@@ -1,6 +1,6 @@
 import type { Core } from '@strapi/strapi';
 
-const seedData = require('../scripts/seed-data');
+const seedData = require('../../scripts/seed-data');
 
 export default {
   /**
