@@ -8,6 +8,10 @@ import {
   courseSchema,
   eventSchema
 } from "@/lib/schema";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: {
@@ -103,7 +107,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-KE" dir="ltr">
+    <html lang="en-KE" dir="ltr" className={cn("font-sans", geist.variable)}>
       <head>
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

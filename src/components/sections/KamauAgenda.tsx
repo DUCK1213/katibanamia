@@ -127,17 +127,17 @@ export default function KamauAgenda() {
 
         {/* Agenda Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {agendaItems.map((item, index) => (
-            <AgendaCard
-              key={item.letter}
-              letter={item.letter}
-              title={item.title}
-              subtitle={item.subtitle}
-              description={item.description}
-              delay={index * 100}
-            />
-          ))}
-        </div>
+           {agendaItems.map((item, index) => (
+             <AgendaCard
+               key={item.letter + index}
+               letter={item.letter}
+               title={item.title}
+               subtitle={item.subtitle}
+               description={item.description}
+               delay={index * 100}
+             />
+           ))}
+         </div>
       </div>
     </section>
   );
