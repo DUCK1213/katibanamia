@@ -5,19 +5,19 @@ import Image from "next/image";
 
 const carouselImages = [
   {
-    src: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop",
+    src: "/img/G8MXJwjXYAI-LM8.jpeg",
     alt: "Katiba Mfukoni Book",
   },
   {
-    src: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop",
+    src: "/img/G8MXJwsXoAgU3o2.jpeg",
     alt: "Katiba Made Familiar Book",
   },
   {
-    src: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1000&auto=format&fit=crop",
+    src: "/img/G8opn_dW4AAkAIA.jpeg",
     alt: "Constitution Book",
   },
   {
-    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+    src: "/img/G8opoNHW4AADUfQ.jpeg",
     alt: "Kenya Constitution",
   },
 ];
@@ -148,11 +148,11 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 flex items-center min-h-[calc(100vh-80px)]">
+        <div className={`w-full transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {/* Badge with animation */}
           <div 
-            className="inline-block px-6 py-2 bg-[#C8102E] text-white font-semibold text-sm tracking-widest uppercase mb-8 shadow-lg shadow-[#C8102E]/30"
+            className="inline-block px-4 md:px-6 py-2 bg-[#C8102E] text-white font-semibold text-xs md:text-sm tracking-widest uppercase mb-6 md:mb-8 shadow-lg shadow-[#C8102E]/30"
             style={{ 
               animation: isVisible ? 'fadeInUp 0.6s ease-out forwards' : 'none',
               opacity: 0
@@ -161,10 +161,10 @@ export default function Hero() {
             Civic Education Movement
           </div>
 
-          {/* Title with animation */}
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-6">
+          {/* Title with responsive class */}
+          <h1 className="font-serif font-extrabold leading-[1.1] mb-6 md:mb-8 overflow-visible">
             <span 
-              className="block"
+              className="block text-responsive-hero"
               style={{ 
                 animation: isVisible ? 'slideInUp 0.8s ease-out 0.1s forwards' : 'none',
                 opacity: 0,
@@ -174,7 +174,7 @@ export default function Hero() {
               Katiba
             </span>
             <span 
-              className="block text-[#C8102E]"
+              className="block text-[#C8102E] text-responsive-hero"
               style={{ 
                 animation: isVisible ? 'slideInUp 0.8s ease-out 0.3s forwards' : 'none',
                 opacity: 0,
@@ -185,21 +185,21 @@ export default function Hero() {
             </span>
           </h1>
 
-          {/* Subtitle with fade in */}
+          {/* Subtitle with adjusted size for mobile */}
           <p 
-            className="text-xl sm:text-2xl md:text-3xl max-w-2xl mb-10 text-gray-200 leading-relaxed"
+            className="text-lg md:text-2xl lg:text-3xl max-w-2xl mb-10 md:mb-12 text-gray-200 leading-relaxed font-medium"
             style={{ 
               animation: isVisible ? 'fadeIn 0.8s ease-out 0.5s forwards' : 'none',
               opacity: 0
             }}
           >
             Empowering every Kenyan with constitutional knowledge through debates, literacy tests, and music. 
-            A 47-week journey across all counties, every Wednesday to Friday.
+            <span className="hidden sm:inline"> A 47-week journey across all counties, every Wednesday to Friday.</span>
           </p>
 
-          {/* CTA Buttons with hover animations */}
+          {/* CTA Buttons - Stacking on mobile */}
           <div 
-            className="flex flex-wrap gap-4"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6"
             style={{ 
               animation: isVisible ? 'fadeIn 0.8s ease-out 0.7s forwards' : 'none',
               opacity: 0
@@ -207,14 +207,14 @@ export default function Hero() {
           >
             <a
               href="#take-action"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-[#C8102E] text-white font-semibold text-lg transition-all duration-300 hover:bg-[#A00D25] hover:-translate-y-1 hover:shadow-xl hover:shadow-[#C8102E]/30 hover:scale-105"
+              className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-[#C8102E] text-white font-bold text-lg transition-all duration-300 hover:bg-[#A00D25] hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#C8102E]/40 active:scale-95"
             >
               <span>Take Action Now</span>
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <a
               href="#about"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/50 text-white font-semibold text-lg transition-all duration-300 hover:bg-white hover:text-black hover:-translate-y-1 hover:scale-105"
+              className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-white/10 backdrop-blur-md border-2 border-white/30 text-white font-bold text-lg transition-all duration-300 hover:bg-white hover:text-black hover:-translate-y-1 active:scale-95"
             >
               <span>Learn More</span>
             </a>

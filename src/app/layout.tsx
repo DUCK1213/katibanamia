@@ -117,8 +117,6 @@ export default function RootLayout({
           rel="stylesheet"
         />
         
-        {/* DNS Prefetch for Strapi API */}
-        <link rel="dns-prefetch" href="https://katibapage-53cc23b3f3c2.strapiapp.com" />
         
         {/* Structured Data - JSON-LD */}
         <script

@@ -17,7 +17,7 @@ export async function GET() {
     const versionResult = await query('SELECT version()');
     const tablesResult = await query(`
       SELECT table_name 
-      FROM information.tables 
+      FROM information_schema.tables 
       WHERE table_schema = 'public'
     `);
 
@@ -74,9 +74,21 @@ export async function POST(request: NextRequest) {
         )
       `);
 
+      await query(`
+        CREATE TABLE IF NOT EXISTS contributions (
+          id VARCHAR(255) PRIMARY KEY,
+          amount DECIMAL(10, 2) NOT NULL,
+          phone_number VARCHAR(50) NOT NULL,
+          donor_name VARCHAR(255),
+          status VARCHAR(20) DEFAULT 'pending',
+          transaction_id VARCHAR(255),
+          timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+
       return NextResponse.json({
         message: 'Database initialized successfully',
-        tables: ['contacts', 'newsletter_subscribers', 'orders'],
+        tables: ['contacts', 'newsletter_subscribers', 'orders', 'contributions'],
       });
     }
 

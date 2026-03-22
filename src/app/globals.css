@@ -258,3 +258,81 @@ body {
     @apply font-sans;
   }
 }
+
+/* ── Mobile optimizations ──────────────────────────────────────────────────── */
+
+/* Prevent text size inflation on iOS */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Keep horizontal overflow in check globally */
+body {
+  overflow-x: hidden;
+}
+
+/* Minimum 44×44px tap targets for accessibility */
+button,
+a,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Smooth momentum scrolling on iOS */
+.overflow-y-auto,
+.overflow-y-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Safe area padding for notch/home-bar devices */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Responsive font scale */
+@media (max-width: 480px) {
+  .text-responsive-hero {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    line-height: 1.1;
+  }
+  .text-responsive-section {
+    font-size: clamp(1.75rem, 8vw, 3rem);
+  }
+}
+
+/* Prevent chart overflow on mobile */
+@media (max-width: 640px) {
+  .recharts-wrapper,
+  .recharts-surface {
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+}
+
+/* Mobile nav animation */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-down {
+  animation: slideDown 0.2s ease-out forwards;
+}
+
+/* Floating WhatsApp button */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  80%, 100% { transform: scale(1.4); opacity: 0; }
+}
+.whatsapp-pulse::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #25D366;
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}

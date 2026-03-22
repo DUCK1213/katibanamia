@@ -4,6 +4,8 @@ import Stats from "@/components/sections/Stats";
 import About from "@/components/sections/About";
 import ActionAreas from "@/components/sections/ActionAreas";
 import KamauAgenda from "@/components/sections/KamauAgenda";
+import Contributions from "@/components/sections/Contributions";
+import Cashflow from "@/components/sections/Cashflow";
 import CTA from "@/components/sections/CTA";
 import Programs from "@/components/sections/Programs";
 import Revenue from "@/components/sections/Revenue";
@@ -21,6 +23,8 @@ export default function Home() {
         <About />
         <ActionAreas />
         <KamauAgenda />
+        <Contributions />
+        <Cashflow />
         <CTA />
         <Programs />
         <Revenue />
