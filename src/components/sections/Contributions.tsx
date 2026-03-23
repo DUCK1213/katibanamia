@@ -67,6 +67,7 @@ export default function ContributionsSection() {
   const [summary, setSummary] = useState({ totalAmount: 0, totalContributions: 0, pendingContributions: 0 });
   const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     amount: '',
     phoneNumber: '',
@@ -121,6 +122,7 @@ export default function ContributionsSection() {
    * about new contributions and status changes.
    */
   useEffect(() => {
+    setMounted(true);
     fetchContributions();
 
     // Setup real-time updates
@@ -297,7 +299,7 @@ export default function ContributionsSection() {
   const COLORS = ['#006B3F', '#D4AF37', '#C8102E'];
 
   return (
-    <section id="contributions" className="relative py-24 overflow-hidden bg-[var(--warm-white)]">
+    <section id="contributions" className="relative py-24 overflow-hidden bg-background">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 right-0 -u-translate-y-1/2 w-[500px] h-[500px] bg-[var(--kenya-red)]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 w-[400px] h-[400px] bg-[var(--kenya-green)]/5 rounded-full blur-3xl pointer-events-none" />
@@ -369,7 +371,7 @@ export default function ContributionsSection() {
                       </p>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mb-10">
-                        <div className="bg-[var(--warm-white)] p-6 rounded-2xl border border-[var(--border-color)]">
+                        <div className="bg-background p-6 rounded-2xl border border-[var(--border-color)]">
                           <h4 className="font-bold text-[var(--deep-charcoal)] mb-4 flex items-center gap-2">
                             <Smartphone className="h-5 w-5 text-[var(--kenya-green)]" />
                             Direct Prompt
@@ -378,7 +380,7 @@ export default function ContributionsSection() {
                             An M-Pesa push message has been sent to your phone. Simply enter your PIN to authorize.
                           </p>
                         </div>
-                        <div className="bg-[var(--warm-white)] p-6 rounded-2xl border border-[var(--border-color)]">
+                        <div className="bg-background p-6 rounded-2xl border border-[var(--border-color)]">
                           <h4 className="font-bold text-[var(--deep-charcoal)] mb-4 flex items-center gap-2">
                             <CreditCard className="h-5 w-5 text-[var(--accent-gold)]" />
                             Manual Paybill
@@ -562,23 +564,39 @@ export default function ContributionsSection() {
                       </CardHeader>
                       <CardContent>
                         <div className="h-[280px] w-full pt-4">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={trendData}>
-                              <defs>
-                                <linearGradient id="colorAmt" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor="var(--kenya-red)" stopOpacity={0.3}/>
-                                  <stop offset="95%" stopColor="var(--kenya-red)" stopOpacity={0}/>
-                                </linearGradient>
-                              </defs>
-                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E0DED9" />
-                              <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: 700 }} />
-                              <YAxis hide />
-                              <Tooltip 
-                                contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontWeight: 700 }}
-                              />
-                              <Area type="monotone" dataKey="amount" stroke="var(--kenya-red)" strokeWidth={3} fillOpacity={1} fill="url(#colorAmt)" />
-                            </AreaChart>
-                          </ResponsiveContainer>
+                          {mounted ? (
+                            <ResponsiveContainer width="100%" height={250}>
+                              <AreaChart data={trendData}>
+                                <defs>
+                                  <linearGradient id="colorAmt" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="var(--kenya-red)" stopOpacity={0.3} />
+                                    <stop offset="95%" stopColor="var(--kenya-red)" stopOpacity={0} />
+                                  </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E0DED9" />
+                                <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: 700 }} />
+                                <YAxis hide />
+                                <Tooltip
+                                  contentStyle={{
+                                    borderRadius: '16px',
+                                    border: 'none',
+                                    boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
+                                    fontWeight: 700,
+                                  }}
+                                />
+                                <Area
+                                  type="monotone"
+                                  dataKey="amount"
+                                  stroke="var(--kenya-red)"
+                                  strokeWidth={3}
+                                  fillOpacity={1}
+                                  fill="url(#colorAmt)"
+                                />
+                              </AreaChart>
+                            </ResponsiveContainer>
+                          ) : (
+                            <div className="h-[250px] w-full" />
+                          )}
                         </div>
                       </CardContent>
                     </Card>
@@ -591,25 +609,29 @@ export default function ContributionsSection() {
                         <CardTitle className="text-lg font-bold">Status</CardTitle>
                       </CardHeader>
                       <CardContent className="flex flex-col items-center justify-center pt-0 h-[280px]">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <PieChart>
-                            <Pie
-                              data={statusData}
-                              cx="50%"
-                              cy="50%"
-                              innerRadius={60}
-                              outerRadius={80}
-                              paddingAngle={5}
-                              dataKey="value"
-                              cornerRadius={4}
-                            >
-                              {statusData.map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                              ))}
-                            </Pie>
-                            <Tooltip />
-                          </PieChart>
-                        </ResponsiveContainer>
+                        {mounted ? (
+                          <ResponsiveContainer width="100%" height={250}>
+                            <PieChart>
+                              <Pie
+                                data={statusData}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={60}
+                                outerRadius={80}
+                                paddingAngle={5}
+                                dataKey="value"
+                                cornerRadius={4}
+                              >
+                                {statusData.map((_, index) => (
+                                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                              </Pie>
+                              <Tooltip />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        ) : (
+                          <div className="h-[250px] w-full" />
+                        )}
                         <div className="flex flex-wrap justify-center gap-3 mt-4">
                           {statusData.map((item, i) => (
                             <div key={i} className="flex items-center gap-1">

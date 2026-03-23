@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   // Turbopack configuration for Next.js 16
-  turbopack: {},
+  turbopack: { root: __dirname },
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
 };
 

@@ -8,10 +8,21 @@ import {
   courseSchema,
   eventSchema
 } from "@/lib/schema";
-import { Geist } from "next/font/google";
+import { Crimson_Pro, DM_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+});
+
+const crimsonPro = Crimson_Pro({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-crimson-pro",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -107,17 +118,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-KE" dir="ltr" className={cn("font-sans", geist.variable)}>
+    <html lang="en-KE" dir="ltr" className={cn("font-sans", dmSans.variable, crimsonPro.variable)}>
       <head>
-        {/* Preconnect to external domains for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        
-        
         {/* Structured Data - JSON-LD */}
         <script
           type="application/ld+json"
@@ -156,7 +158,7 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="x-default" href="https://katibanamia.vercel.app" />
       </head>
       <body className="antialiased" itemScope itemType="https://schema.org/WebPage">
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

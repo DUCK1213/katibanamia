@@ -17,11 +17,11 @@ export default function Navbar() {
     ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="font-serif text-2xl font-bold text-white tracking-tight">
+          <Link href="/" className="font-serif text-2xl font-bold text-[var(--foreground)] tracking-tight">
             <span className="text-[#C8102E]">Katiba</span> Na Mia Mia
           </Link>
 
@@ -31,7 +31,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
+                className="text-[var(--text-secondary)] hover:text-[var(--foreground)] transition-colors text-sm font-medium"
               >
                 {link.label}
               </Link>
@@ -64,14 +64,14 @@ export default function Navbar() {
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[-1] md:hidden transition-opacity"
             onClick={() => setIsMenuOpen(false)}
           />
-          <div className="md:hidden bg-[#0a0a0a] border-b border-white/10 px-4 pt-2 pb-8 animate-slide-down">
+              <div className="md:hidden bg-background/95 border-b border-border/10 px-4 pt-2 pb-8 animate-slide-down">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-gray-300 hover:text-white transition-colors py-4 text-lg font-medium border-b border-white/5 active:bg-white/5 px-2 rounded-lg"
+                      className="text-[var(--text-secondary)] hover:text-[var(--foreground)] transition-colors py-4 text-lg font-medium border-b border-white/5 active:bg-white/5 px-2 rounded-lg"
                 >
                   {link.label}
                 </Link>

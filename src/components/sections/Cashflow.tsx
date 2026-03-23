@@ -38,8 +38,10 @@ export default function CashflowSection() {
   const [cashflowData, setCashflowData] = useState<CashflowData[]>([]);
   const [summary, setSummary] = useState<CashflowSummary | null>(null);
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     fetchCashflowData();
   }, []);
 
@@ -65,7 +67,7 @@ export default function CashflowSection() {
   const netPositive = (summary?.netIncome ?? 0) >= 0;
 
   return (
-    <section id="cashflow" className="py-20 bg-[var(--warm-white)]">
+    <section id="cashflow" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -162,7 +164,7 @@ export default function CashflowSection() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-2 md:p-6">
-              <div className="h-64 md:h-72 w-full">
+              <div className="h-72 w-full">
                 {loading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--kenya-red)]" />
@@ -172,33 +174,37 @@ export default function CashflowSection() {
                     No cashflow data available
                   </div>
                 ) : (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={cashflowData.slice(-30)}
-                      margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.4} />
-                      <XAxis
-                        dataKey="date"
-                        tick={{ fontSize: 11, fill: '#9CA3AF' }}
-                        axisLine={false}
-                        tickLine={false}
-                      />
-                      <YAxis
-                        tick={{ fontSize: 11, fill: '#9CA3AF' }}
-                        axisLine={false}
-                        tickLine={false}
-                        tickFormatter={(v) => `${v.toLocaleString()}`}
-                      />
-                      <Tooltip
-                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: 12 }}
-                        formatter={(value: any) => [`KES ${fmt(Number(value))}`, undefined]}
-                      />
-                      <Legend verticalAlign="top" height={32} wrapperStyle={{ fontSize: 12 }} />
-                      <Bar dataKey="income" name="Income" fill="var(--kenya-green, #006B3F)" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="expense" name="Expense" fill="var(--kenya-red, #C8102E)" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  mounted ? (
+                    <ResponsiveContainer width="100%" height={288}>
+                      <BarChart
+                        data={cashflowData.slice(-30)}
+                        margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.4} />
+                        <XAxis
+                          dataKey="date"
+                          tick={{ fontSize: 11, fill: '#9CA3AF' }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <YAxis
+                          tick={{ fontSize: 11, fill: '#9CA3AF' }}
+                          axisLine={false}
+                          tickLine={false}
+                          tickFormatter={(v) => `${v.toLocaleString()}`}
+                        />
+                        <Tooltip
+                          contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: 12 }}
+                          formatter={(value: any) => [`KES ${fmt(Number(value))}`, undefined]}
+                        />
+                        <Legend verticalAlign="top" height={32} wrapperStyle={{ fontSize: 12 }} />
+                        <Bar dataKey="income" name="Income" fill="var(--kenya-green, #006B3F)" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="expense" name="Expense" fill="var(--kenya-red, #C8102E)" radius={[4, 4, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="h-full w-full" />
+                  )
                 )}
               </div>
             </CardContent>
@@ -219,25 +225,29 @@ export default function CashflowSection() {
                     {loading ? "Loading..." : "No category data"}
                   </div>
                 ) : (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={categoryPieData}
-                        cx="50%"
-                        cy="45%"
-                        outerRadius={80}
-                        innerRadius={48}
-                        paddingAngle={3}
-                        dataKey="value"
-                        cornerRadius={4}
-                      >
-                        {categoryPieData.map((_, i) => (
-                          <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(v: any) => `KES ${fmt(Number(v))}`} />
-                    </PieChart>
-                  </ResponsiveContainer>
+                  mounted ? (
+                    <ResponsiveContainer width="100%" height={288}>
+                      <PieChart>
+                        <Pie
+                          data={categoryPieData}
+                          cx="50%"
+                          cy="45%"
+                          outerRadius={80}
+                          innerRadius={48}
+                          paddingAngle={3}
+                          dataKey="value"
+                          cornerRadius={4}
+                        >
+                          {categoryPieData.map((_, i) => (
+                            <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip formatter={(v: any) => `KES ${fmt(Number(v))}`} />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="h-full w-full" />
+                  )
                 )}
               </div>
               {/* Legend */}
@@ -258,7 +268,7 @@ export default function CashflowSection() {
 
         {/* ── Formula Reference ────────────────────────────────────────────────── */}
         {summary && (
-          <Card className="border border-gray-200 bg-white">
+          <Card className="border border-border">
             <CardHeader className="pb-3">
               <CardTitle className="text-base font-bold text-gray-700">
                 📊 Google Sheet Formula Reference (F2:H2)
